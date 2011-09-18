@@ -1,0 +1,294 @@
+<html>
+	<head>
+
+	<script type="text/javascript" src="http://use.typekit.com/ucb0mze.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<script type="text/javascript" src="/static/jquery-1.4.2.min.js"></script>
+	
+		
+		<style>
+			body, html {
+				background-color: #000;
+				margin: 0px;
+				padding: 0px;
+				height: 100%;
+				width: 100%;
+			}
+			
+			.plate {
+				width: 640px;
+				min-height: 960px;
+				background-color: #fff;
+			}
+			
+			.divcontainer {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 2560px;
+			}
+			#appcontainer {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				z-index: 1;
+				width: 1920px;
+				height: 1960px;
+				overflow: hidden;
+			}
+			
+			#frontplate {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				z-index: 1000;
+			}
+			
+			#homescreen {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				z-index: 100;
+			}
+			
+			#lists {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-color: #fff;
+				z-index: 100;
+			}
+			
+			.list {
+				position: absolute;
+				top: 0px;
+				left: 640px;
+				background-color: #fff;
+				z-index: 100;
+			}
+
+			.item {
+				position: absolute;
+				top: 0px;
+				left: 1280px;
+				background-color: #fff;
+				z-index: 100;
+			}
+			
+			.padborder {
+				border-top: 1px solid #fff;
+				border-bottom: 1px solid #fff;
+				padding: 20px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				background-color: rgba(0,0,0, 0.5);
+				color: #fff;
+			}
+			
+			.listing {
+				background-color: #fff;
+			}
+
+			.listingitem {
+				border-top: 1px solid #ccc;
+				border-bottom: 1px solid #999;
+				background-color: #fff;
+				font-family: "museo-slab";
+				font-weight: 900;
+			}
+			
+			h1, h2, h3, h4 {
+				font-family: "museo-slab";
+				font-weight: 700;
+			}
+			
+			.navitem {
+				padding: 10px;
+			}
+			
+			.navtitle {
+				font-size: 120%;
+				font-weight: 900;
+			}
+			
+			.infoset {
+				padding: 20px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				background-color: rgba(0,0,0, 0.7);
+				color: #fff;
+			}
+			
+			.info {
+				color: #fff;
+				font-family: "museo-slab";
+				font-weight: 300;
+			}
+			
+			.stats {
+				padding-left: 20px;
+			}
+			
+			#poweredby {
+				position: absolute;
+				left: 204px;
+				bottom: 20px;
+				z-index: 1001;
+				text-align: center;
+			}
+		</style>
+		
+		<script type="text/javascript">
+		
+			function onLoad() {
+				alert("hello")
+			}
+		
+		</script>
+	</head>
+	<body onload="onLoad()">
+		<div id="appcontainer">
+			<div id="frontplate" class="plate" style="background-image: url('/static/frontplate.png')">
+				<div id="poweredby">
+					<img src="/static/poweredby-white.png"/>
+				</div>
+			</div>
+			<!--div id="welcomemessage">
+			</div -->
+			<div class="divcontainer">
+			<div id="lists" class="plate">
+				{% for list in listset %}
+				<div class="listingitem">
+						<table cellpadding="0" cellspacing="0" width="640px">
+							<tr valign="top">
+								<td width="150px">
+									<img src="/asset/list/icon/{{list.id}}" height="150px">
+								</td>
+								<td width="440px" valign="middle">
+									<div class="navitem">
+										<div class="navtitle">{{list.name}}</div>
+										<table>
+											<tr>
+												<td>
+													<img src="{{list.user.photo}}" height="40">
+												</td>
+												<td>
+													Created by {{list.user.firstName}} {{list.user.lastName}}
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="50px">
+									<img src="/static/listnext.png">
+								</td>
+							</tr>
+						</table>
+				</div>
+			</div>
+			<div id="{{list.id}}" class="list plate" style="background-image: url('/asset/list/picture/{{list.id}}')">
+				<div class="padborder">
+					<table>
+						<tr valign="middle">
+							<td>
+								<img src="/static/listback.png">
+							</td>
+							<td>
+								<h1 style="color:#fff;padding-top:18px">
+									{{list.name}}
+								</h1>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="listing">
+					{% for item in list.listItems.items %}
+					<div class="listingitem">
+						<table cellpadding="0" cellspacing="0" width="640px">
+							<tr valign="top">
+								<td width="150px">
+									<img src="/asset/item/icon/{{list.id}}_{{item.id}}" height="150px">
+								</td>
+								<td width="440px" valign="middle">
+									<div class="navitem">
+										<div class="navtitle">{{item.venue.name}}</div>
+										{% if item.venue.location.address %}
+											<div>{{item.venue.location.address}},</div>
+										{% endif %}
+										<div>{{item.venue.location.city}}</div>
+									</div>
+								</td>
+								<td width="50px">
+									<img src="/static/listnext.png">
+								</td>
+							</tr>
+						</table>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% for item in list.listItems.items %}
+			{{forloop.counter}}
+			<div id="{{list.id}}_{{item.id}}" class="item plate" style="background-image: url('/asset/item/picture/{{list.id}}_{{item.id}}')">
+				<div class="padborder">
+					<table>
+						<tr valign="middle">
+							<td>
+								<img src="/static/listback.png">
+							</td>
+							<td>
+								<h1 style="color:#fff;padding-top:18px">
+									{{item.venue.name}}
+								</h1>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="infoset">
+					<table cellpadding="0" cellspacing="0">
+						<tr valign="top">
+							<td>
+								<div>
+									<img src="http://maps.googleapis.com/maps/api/staticmap?center={{item.venue.location.lat}},{{item.venue.location.lng}}&zoom=16&size=200x200&maptype=roadmap
+&markers=color:blueS%7C{{item.venue.location.lat}},{{item.venue.location.lng}}&sensor=false">
+								</div>
+								<div class="info">
+									{% if item.venue.location.address %}
+										<div>{{item.venue.location.address}},</div>
+									{% endif %}
+									<div>{{item.venue.location.city}}</div>
+								</div>
+							</td>
+							<td>
+								<div class="info stats">
+								<div>
+									{{item.venue.stats.checkinsCount}} checkins
+								</div>
+								<div>
+									{{item.venue.stats.usersCount}} users
+								</div>
+								<br />	
+								<br />	
+								<br />	
+								<div>
+									<img src="/static/checkin-blue.png">
+								</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+					<br />
+					<br />
+				<center>
+					<img src="/static/play.png" id="playpause">
+				</center>
+					
+					
+			</div>
+			{% endfor %}
+			{% endfor %}
+			</div>
+		</div>
+	</body>
+</html>
